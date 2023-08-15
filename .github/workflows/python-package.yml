@@ -1,0 +1,28 @@
+
+name: Upload Python Package
+
+on:
+  push:
+    branches: -master
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: 'Python 3.10.11'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+    - name: Run tests
+      run: |
+        python unit_test/run_unit_test.py --easyocr easyocr --verbose 2 --test_data unit_test/data/EasyOcrUnitTestPackage.pickle --image_data_dir examples
+
